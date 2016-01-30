@@ -1,0 +1,23 @@
+parameters:
+    xtain_patternlab.root_dir: "%kernel.root_dir%/../patternlab"
+
+services:
+    xtain_patternlab.pattern_engine.util:
+        class: XTAIN\Bundle\PatternlabBundle\PatternEngine\Util
+        arguments: [ @xtain_patternlab.pattern_engine.pattern_locator ]
+
+    xtain_patternlab.pattern_engine.pattern_locator:
+        class: XTAIN\Bundle\PatternlabBundle\PatternEngine\PatternLocator
+        arguments: [ "%xtain_patternlab.root_dir%" ]
+
+    xtain_patternlab.twig.loader.patternlab:
+        class: XTAIN\Bundle\PatterlabBundle\Twig\Loader\Patternlab
+        arguments: [ @xtain_patternlab.pattern_engine.pattern_locator, @xtain_patternlab.pattern_engine.util ]
+        tags:
+            - { name: twig.loader }
+
+    xtain_patternlab.command.setup_command:
+        class: XTAIN\Bundle\PatternlabBundle\Command\SetupCommand
+        arguments: [ "%xtain_patternlab.root_dir%" ]
+        tags:
+            -  { name: console.command }

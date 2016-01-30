@@ -1,0 +1,21 @@
+{
+	"name":             "xtain/patternlab-bundle",
+	"description":      "Pattern Lab support for symfony.",
+	"keywords":         ["twig", "pattern lab", "pattern engine"],
+	"license":          "MIT",
+	"authors": [
+		{
+			"name":         "Maximilian Ruta",
+			"email":        "mr@xtain.net",
+			"homepage":     "http://xtain.net",
+			"role":         "Lead Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.3.6",
+		"xtain/composer-runner": ">=0.9.0"
+	},
+	"autoload": {
+		"psr-4": { "XTAIN\\Bundle\\PatternlabBundle\\": "" }
+	}
+}
