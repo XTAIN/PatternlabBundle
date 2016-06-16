@@ -16,6 +16,12 @@ services:
         tags:
             - { name: twig.loader }
 
+    xtain_patternlab.command.run_command:
+        class: XTAIN\Bundle\PatternlabBundle\Command\RunCommand
+        arguments: [ "%xtain_patternlab.root_dir%" ]
+        tags:
+            -  { name: console.command }
+
     xtain_patternlab.command.setup_command:
         class: XTAIN\Bundle\PatternlabBundle\Command\SetupCommand
         arguments: [ "%xtain_patternlab.root_dir%" ]
