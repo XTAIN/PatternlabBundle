@@ -32,13 +32,30 @@ class SetupCommand extends ContainerAwareCommand
     protected $rootPath;
 
     /**
+     * @var string
+     */
+    protected $patterns;
+
+    /**
+     * @var string
+     */
+    protected $config;
+
+    /**
      * SetupCommand constructor.
      *
      * @param string $rootPath
+     * @param string $patterns
+     * @param string $config
      */
-    public function __construct($rootPath)
-    {
-        $this->rootPath = $rootPath;
+    public function __construct(
+        $rootPath,
+        $patterns,
+        $config
+    ) {
+        $this->rootPath = realpath($rootPath);
+        $this->patterns = realpath($patterns);
+        $this->config = realpath($config);
 
         parent::__construct();
     }
@@ -86,6 +103,9 @@ class SetupCommand extends ContainerAwareCommand
         $composerRunner = new ComposerRunner();
         $cwd = getcwd();
 
+        $filesystem->remove($this->rootPath . DIRECTORY_SEPARATOR . 'config');
+        $filesystem->remove($this->rootPath . DIRECTORY_SEPARATOR . 'source');
+
         if ($filesystem->exists($this->rootPath)) {
             chdir($this->rootPath);
             $composerRunner->execute('install');
@@ -95,6 +115,9 @@ class SetupCommand extends ContainerAwareCommand
                 $this->rootPath
             ));
         }
+
+        $filesystem->symlink($this->config, $this->rootPath . DIRECTORY_SEPARATOR . 'config');
+        $filesystem->symlink($this->patterns, $this->rootPath . DIRECTORY_SEPARATOR . 'source');
 
         chdir($cwd);
     }

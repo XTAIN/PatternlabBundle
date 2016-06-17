@@ -4,6 +4,8 @@
  */
 
 namespace XTAIN\Bundle\PatternlabBundle\PatternEngine;
+
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -49,6 +51,10 @@ class PatternLocator
         $patterns = [];
 
         $base = realpath($this->getPatternsPath());
+
+        if (!file_exists($base)) {
+            return array();
+        }
 
         $finder = new Finder();
         $finder->files()->in($base);
