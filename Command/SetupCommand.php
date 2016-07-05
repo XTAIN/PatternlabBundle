@@ -116,6 +116,8 @@ class SetupCommand extends ContainerAwareCommand
             ));
         }
 
+        $filesystem->remove($this->rootPath . DIRECTORY_SEPARATOR . 'config');
+        $filesystem->remove($this->rootPath . DIRECTORY_SEPARATOR . 'source');
         $filesystem->symlink($this->config, $this->rootPath . DIRECTORY_SEPARATOR . 'config');
         $filesystem->symlink($this->patterns, $this->rootPath . DIRECTORY_SEPARATOR . 'source');
 
